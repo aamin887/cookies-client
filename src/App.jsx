@@ -12,7 +12,7 @@ function App() {
   // Function to set a cookie on the server
   const setCookie = async () => {
     try {
-      await axios.get("http://localhost:3000/set-cookie");
+      await axios.get("https://cookies-uj9t.onrender.com/set-cookie");
       console.log("Cookie set successfully");
     } catch (error) {
       console.error("Error setting cookie:", error);
