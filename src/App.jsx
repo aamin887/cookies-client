@@ -49,13 +49,6 @@ function App() {
     setCookie();
   }, []);
 
-  useEffect(() => {
-    const intervalId = setInterval(updateServer, 1000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [startTime, scrollPosition]);
 
   return (
     <div className="App">
