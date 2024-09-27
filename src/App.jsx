@@ -9,13 +9,17 @@ function App() {
 
   // get the cookies
   const updateServer = async () => {
-    console.log(startTime);
     try {
-      const res = await axios.post("http://localhost:3000/update-tracking", {
-        timeSpent: Date.now() - startTime,
-        scrollPosition: scrollPosition,
-      });
-
+      const res = await axios.post(
+        "https://cookies-uj9t.onrender.com/update-tracking",
+        {
+          timeSpent: Date.now() - startTime,
+          scrollPosition: scrollPosition,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -25,7 +29,7 @@ function App() {
   // Function to set a cookie on the server
   const setCookie = async () => {
     try {
-      await axios.get("http://localhost:3000/set-cookie", {
+      await axios.get("https://cookies-uj9t.onrender.com/set-cookie", {
         withCredentials: true,
       });
       console.log("Cookie set successfully");
@@ -41,8 +45,8 @@ function App() {
 
     window.addEventListener("scroll", handleScroll);
 
-    setCookie();
     updateServer();
+    setCookie();
   }, []);
 
   useEffect(() => {
@@ -56,7 +60,7 @@ function App() {
   return (
     <div className="App">
       <div>
-        <button onClick={setCookie}>set cookies</button>
+        <button onClick={updateServer}>set cookies</button>
         <p>Time spent on this site: {startTime}</p>
         <p>Scroll position: {scrollPosition}</p>
       </div>
