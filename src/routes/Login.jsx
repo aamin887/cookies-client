@@ -28,7 +28,7 @@ function Login() {
     console.log(loginRes);
 
     if (loginRes.status === 200) {
-      navigate("/");
+      navigate("/dash");
 
       return;
     }
