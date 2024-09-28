@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [formData, setFormData] = useState({
-    email: "aamin@gmail.com",
+    email: "test01@gmail.com",
     password: "1234",
   });
 
   const handleSubmit = async function (e) {
     e.preventDefault();
     const loginRes = await axios.post(
-      "http://localhost:3000/auth/login",
+      "https://cookies-uj9t.onrender.com/auth/login",
       { email, password },
       { withCredentials: true }
     );
