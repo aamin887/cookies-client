@@ -4,58 +4,56 @@ import "./App.css";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [startTime, setStartTime] = useState(Date.now());
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [formData, setFormData] = useState({
+    email: "aamin@gmail.com",
+    password: "1234",
+  });
 
-  // get the cookies
-  const updateServer = async () => {
-    try {
-      const res = await axios.post(
-        "https://cookies-uj9t.onrender.com/update-tracking",
-        {
-          timeSpent: Date.now() - startTime,
-          scrollPosition: scrollPosition,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleSubmit = async function (e) {
+    e.preventDefault();
+    const loginRes = await axios.post(
+      "http://localhost:3000/auth/login",
+      { email, password },
+      { withCredentials: true }
+    );
+
+    console.log(loginRes);
   };
 
-  // Function to set a cookie on the server
-  const setCookie = async () => {
-    try {
-      await axios.get("https://cookies-uj9t.onrender.com/set-cookie", {
-        withCredentials: true,
-      });
-      console.log("Cookie set successfully");
-    } catch (error) {
-      console.error("Error setting cookie:", error);
-    }
+  const handleChange = function (e) {
+    const { name, value } = e.target;
+
+    setFormData({ ...formData, [name]: value });
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollPosition(window.screenY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    updateServer();
-    setCookie();
-  }, []);
-
+  const { email, password } = formData;
 
   return (
     <div className="App">
       <div>
-        <button onClick={updateServer}>set cookies</button>
-        <p>Time spent on this site: {startTime}</p>
-        <p>Scroll position: {scrollPosition}</p>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email">email</label>
+            <input
+              type="text"
+              name="email"
+              value={email}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              type="text"
+              name="password"
+              value={password}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <button type="submit">Login</button>
+          </div>
+        </form>
       </div>
     </div>
   );
