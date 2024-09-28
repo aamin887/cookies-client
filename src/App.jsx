@@ -1,6 +1,14 @@
 import axios from "axios";
 import "./App.css";
 
+const url = "https://cookies-uj9t.onrender.com/auth/login";
+
+const instance = axios.create({
+  baseURL: url,
+  timeout: 1000,
+  withCredentials: true,
+});
+
 import { useEffect, useState } from "react";
 
 function App() {
@@ -11,8 +19,7 @@ function App() {
 
   const handleSubmit = async function (e) {
     e.preventDefault();
-    const loginRes = await axios.post(
-      "https://cookies-uj9t.onrender.com/auth/login",
+    const loginRes = await instance.post(
       { email, password },
       { withCredentials: true }
     );
